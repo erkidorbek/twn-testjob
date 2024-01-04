@@ -35,6 +35,9 @@ function TwnTable() {
             case "6":
                 year = "20"
                 break;
+            default:
+                year = "19"
+                break;
         }
 
         return code.substring(5, 7) + "." + code.substring(3, 5) + "." + year + code.substring(1, 3);
@@ -68,7 +71,7 @@ function TwnTable() {
                             <div>
                                 <div dangerouslySetInnerHTML={{ __html: row.intro }}></div>
                                 <div>
-                                    <Link to={`/article/${row.id}`}><button role="button" className="btn-green">Loe rohkem</button></Link>
+                                    <Link to={`/article/${row.id}`}><button role="link" className="btn-green">Loe rohkem</button></Link>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +144,7 @@ function TwnTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {calculatedRows}
+                        {sortedRows}
                     </tbody>
                 </table>
 
