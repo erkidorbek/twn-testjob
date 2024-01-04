@@ -3,7 +3,7 @@ import TwnImage from "./TwnImage";
 import { useParams } from "react-router-dom";
 import Loader from "./Loader";
 
-function Article() {
+const Article = () => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();

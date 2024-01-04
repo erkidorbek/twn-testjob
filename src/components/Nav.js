@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFile, faTable } from '@fortawesome/free-solid-svg-icons'
 
-function Nav({ isOpen }) {
+const Nav = ({ isOpen }) => {
     return (
         <nav className={isOpen ? "open" : ""}>
             <a href="/"><img src={logo} alt="site logo" title="site logo" className="logo" /></a>

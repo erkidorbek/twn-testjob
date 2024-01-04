@@ -1,6 +1,6 @@
 import React from "react";
 
-function Home() {
+const Home = () => {
     return (
         <div className="wrapper text-center home">
             <h1>Trinidad wiseman</h1>

@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Header({ setMenuStatus, menuOpen }) {
+const Header = ({ setMenuStatus, menuOpen }) => {
     return (
         <div className="header">
             <button type="button" onClick={() => setMenuStatus((prev) => !prev)}>

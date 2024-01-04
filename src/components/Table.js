@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort, faSortDown, faSortUp, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Loader from "./Loader";
 
-function TwnTable() {
+const TwnTable = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 

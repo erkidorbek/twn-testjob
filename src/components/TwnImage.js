@@ -1,7 +1,6 @@
 import React from "react";
 
-function TwnImage({imageUrl, imageTitle, imageAlt}) {
-
+const TwnImage = ({imageUrl, imageTitle, imageAlt}) => {
     return (
         <div className="img-backdrop">
             <div className="blurred-img-backdrop">
