@@ -14,7 +14,7 @@ function Article() {
             .then(response => response.json())
             .then(data => setData(data))
             .then(() => setIsLoading(false));
-    }, [])
+    }, [apiUrl])
 
     return (
         <div className="wrapper">
