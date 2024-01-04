@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useMemo } from "react";
-import data from '../components/tableData';
 import { Link } from "react-router-dom";
 import { isNil, convertType, isNumber } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort, faSortDown, faSortUp, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
-const tableData = data;
+import Loader from "./Loader";
 
 function TwnTable() {
-    // const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     fetch("https://midaiganes.irw.ee/api/list?limit=500")
-    //     .then(response => response.json())
-    //     .then(data => setData(data["lists"]))
-    //     .then(() => console.log(data))
-    // }, [])
+    useEffect(() => {
+        fetch("https://midaiganes.irw.ee/api/list?limit=500")
+            .then(response => response.json())
+            .then(data => setData(data))
+            .then(() => setIsLoading(false));
+    }, [])
+
     const [selectedRow, setSelectedRow] = React.useState(-1);
 
     function formatIdCode(idCode) {
@@ -51,7 +51,7 @@ function TwnTable() {
         { accessor: 'phone', label: 'Telefon', format: value => (value.substring(0, 4) + ' ' + value.substring(4)) },
     ]
 
-    const rows = tableData.list.map((row, index) => {
+    const rows = data?.list?.map((row, index) => {
         return (
             <>
                 <tr key={row.id}
@@ -83,13 +83,13 @@ function TwnTable() {
 
     const [activePage, setActivePage] = useState(1);
     const rowsPerPage = 10;
-    const count = rows.length;
+    const count = rows?.length;
     const totalPages = Math.ceil(count / rowsPerPage);
-    const calculatedRows = rows.slice((activePage - 1) * rowsPerPage, activePage * rowsPerPage);
+    const calculatedRows = rows?.slice((activePage - 1) * rowsPerPage, activePage * rowsPerPage);
     const [sort, setSort] = useState({ order: 'asc', orderBy: 'id' })
 
     function sortRows(rows, sort) {
-        return rows.sort((a, b) => {
+        return rows?.sort((a, b) => {
             const { order, orderBy } = sort
 
             if (isNil(a[orderBy])) return 1
@@ -118,46 +118,50 @@ function TwnTable() {
 
     return (
         <div className="wrapper">
+
             <div className="table-wrap">
                 <h1 className="title">Nimekiri</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            {columns.map(column => {
-                                const sortIcon = () => {
-                                    if (column.accessor === sort.orderBy) {
-                                        if (sort.order === 'asc') {
-                                            return <FontAwesomeIcon icon={faSortUp} />
+                {isLoading ? <Loader /> :
+                    <>
+                        <table>
+                            <thead>
+                                <tr>
+                                    {columns.map(column => {
+                                        const sortIcon = () => {
+                                            if (column.accessor === sort.orderBy) {
+                                                if (sort.order === 'asc') {
+                                                    return <FontAwesomeIcon icon={faSortUp} />
+                                                }
+                                                return <FontAwesomeIcon icon={faSortDown} />
+                                            } else {
+                                                return <FontAwesomeIcon icon={faSort} />
+                                            }
                                         }
-                                        return <FontAwesomeIcon icon={faSortDown} />
-                                    } else {
-                                        return <FontAwesomeIcon icon={faSort} />
-                                    }
-                                }
 
-                                return (
-                                    <th key={column.accessor}>
-                                        <button onClick={() => handleSort(column.accessor)}><span>{column.label}</span> {sortIcon()}</button>
-                                    </th>
-                                )
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedRows}
-                    </tbody>
-                </table>
+                                        return (
+                                            <th key={column.accessor}>
+                                                <button onClick={() => handleSort(column.accessor)}><span>{column.label}</span> {sortIcon()}</button>
+                                            </th>
+                                        )
+                                    })}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {sortedRows}
+                            </tbody>
+                        </table>
 
-                <div className="pagination">
-                    <button disabled={activePage === 1} onClick={() => setActivePage(activePage - 1)}><FontAwesomeIcon icon={faChevronLeft} /></button>
-                    {activePage >= 3 && <button onClick={() => setActivePage(activePage - 2)}>{activePage - 2}</button>}
-                    {activePage >= 2 && <button onClick={() => setActivePage(activePage - 1)}>{activePage - 1}</button>}
-                    <button className={"active"}>{activePage}</button>
-                    {activePage <= totalPages - 1 && <button onClick={() => setActivePage(activePage + 1)}>{activePage + 1}</button>}
-                    {activePage <= totalPages - 2 && <button onClick={() => setActivePage(activePage + 2)}>{activePage + 2}</button>}
-                    <button disabled={activePage === totalPages} onClick={() => setActivePage(activePage + 1)}><FontAwesomeIcon icon={faChevronRight} /></button>
-                </div>
-
+                        <div className="pagination">
+                            <button disabled={activePage === 1} onClick={() => setActivePage(activePage - 1)}><FontAwesomeIcon icon={faChevronLeft} /></button>
+                            {activePage >= 3 && <button onClick={() => setActivePage(activePage - 2)}>{activePage - 2}</button>}
+                            {activePage >= 2 && <button onClick={() => setActivePage(activePage - 1)}>{activePage - 1}</button>}
+                            <button className={"active"}>{activePage}</button>
+                            {activePage <= totalPages - 1 && <button onClick={() => setActivePage(activePage + 1)}>{activePage + 1}</button>}
+                            {activePage <= totalPages - 2 && <button onClick={() => setActivePage(activePage + 2)}>{activePage + 2}</button>}
+                            <button disabled={activePage === totalPages} onClick={() => setActivePage(activePage + 1)}><FontAwesomeIcon icon={faChevronRight} /></button>
+                        </div>
+                    </>
+                }
             </div>
         </div>
     )
