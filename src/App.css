@@ -228,7 +228,7 @@ article p {
   filter: blur(4px);
   background-size: 100%; 
   background-position: center;
-  transition: background-size .3s;
+  transition: all .3s;
 }
 
 .img-backdrop:hover img {
@@ -236,7 +236,7 @@ article p {
 }
 
 .img-backdrop:hover .blurred-img {
-  background-size: 110%; 
+  transform: scale(1.2);
 }
 
 .img-backdrop img {
