@@ -2,9 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortDown, faSortUp, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { getBirthDateFromIdCode, formatIdCode } from '../components/helperFunctions';
 import Loader from './Loader';
-
-const rowsPerPage = 10;
 
 const columns = [
   { accessor: 'firstname', label: 'Eesnimi', sortable: true },
@@ -28,62 +27,13 @@ const columns = [
   },
 ];
 
-const getBirthDateFromIdCode = (idCode) => {
-  const code = idCode.toString();
-  const yearCode = code.substring(0, 1);
-  let year;
-  switch (yearCode) {
-    case '1':
-    case '2':
-      year = '18';
-      break;
-    case '3':
-    case '4':
-      year = '19';
-      break;
-    case '5':
-    case '6':
-      year = '20';
-      break;
-    default:
-      year = '19';
-      break;
-  }
-
-  return new Date(year + code.substring(1, 3), code.substring(3, 5), code.substring(5, 7), 0, 0, 0, 0);
-};
-
-const formatIdCode = (idCode) => {
-  const code = idCode.toString();
-  const yearCode = code.substring(0, 1);
-  let year;
-  switch (yearCode) {
-    case '1':
-    case '2':
-      year = '18';
-      break;
-    case '3':
-    case '4':
-      year = '19';
-      break;
-    case '5':
-    case '6':
-      year = '20';
-      break;
-    default:
-      year = '19';
-      break;
-  }
-
-  return code.substring(5, 7) + '.' + code.substring(3, 5) + '.' + year + code.substring(1, 3);
-};
-
 const TwnTable = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedRow, setSelectedRow] = React.useState(-1);
   const [activePage, setActivePage] = useState(1);
-  const [sort, setSort] = useState({ order: 'asc', orderBy: 'id' });
+  const [sort, setSort] = useState({ order: 'asc', orderBy: 'index' });
+  const rowsPerPage = 10;
   const totalPages = Math.ceil(data?.list?.length / rowsPerPage);
 
   useEffect(() => {
@@ -96,6 +46,7 @@ const TwnTable = () => {
   const rows = useMemo(
     () =>
       data?.list
+        ?.map((row, index) => ({ index, ...row }))
         ?.sort((a, b) => {
           const { order, orderBy } = sort;
 
@@ -124,7 +75,7 @@ const TwnTable = () => {
     setActivePage(1);
     setSort((prevSort) => ({
       order: prevSort.order === 'asc' && prevSort.orderBy === accessor ? 'desc' : 'asc',
-      orderBy: prevSort.order === 'desc' && prevSort.orderBy !== 'id' ? 'id' : accessor,
+      orderBy: prevSort.order === 'desc' && prevSort.orderBy === accessor ? 'index' : accessor,
     }));
   };
 
