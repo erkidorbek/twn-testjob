@@ -2,6 +2,7 @@
   --twn-font: BoosterNextFY;
   --twn-textFont: 'Open Sans';
   --twn-rootFontSize: 16px;
+  --twn-smallFontSize: 0.875rem;
   --twn-highlightColor: #14cc76;
   --twn-textColor: #3a3d57;
   --twn-alternateTextColor: #fff;
@@ -70,7 +71,7 @@ h1.title {
   cursor: pointer;
   opacity: 0.75;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: var(--twn-smallFontSize);
   margin-right: 0.5rem;
 }
 
@@ -427,5 +428,16 @@ table th button {
 
   nav ul {
     padding-top: 2.5rem;
+  }
+
+  table th,
+  table td {
+    font-size: var(--twn-smallFontSize);
+    padding: 0.375rem 0.5rem;
+  }
+
+  table th button {
+    font-size: var(--twn-smallFontSize);
+    text-wrap: nowrap;
   }
 }
