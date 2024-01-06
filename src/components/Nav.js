@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faTable } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 const Nav = ({ isOpen }) => {
   return (
@@ -11,14 +12,14 @@ const Nav = ({ isOpen }) => {
       </a>
       <ul>
         <li>
-          <a href="/article">
+          <NavLink to="/article">
             Artikkel <FontAwesomeIcon icon={faFile} />
-          </a>
+          </NavLink>
         </li>
         <li>
-          <a href="/table">
+          <NavLink to="/table">
             Tabel <FontAwesomeIcon icon={faTable} />
-          </a>
+          </NavLink>
         </li>
       </ul>
     </nav>
