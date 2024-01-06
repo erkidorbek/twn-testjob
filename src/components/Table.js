@@ -155,7 +155,7 @@ const TwnTable = () => {
                       })}
                     </tr>
                     <tr key={`${row.id}-hidden`} className="inner-tr">
-                      <td colSpan={5}>
+                      <td colSpan={columns.length}>
                         <div className="table-inner">
                           <div
                             className="table-image"
