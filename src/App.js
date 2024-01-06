@@ -14,9 +14,9 @@ const App = () => {
     <div className="App">
       <Header setMenuStatus={setIsMenuOpen} menuOpen={isMenuOpen} />
 
-      <Nav isOpen={isMenuOpen} />
-
       <Router>
+        <Nav isOpen={isMenuOpen} />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/article" element={<Article />} />
