@@ -100,7 +100,7 @@ const TwnTable = () => {
           if (orderBy === 'personal_code') {
             const dateA = getBirthDateFromIdCode(a.personal_code).getTime();
             const dateB = getBirthDateFromIdCode(b.personal_code).getTime();
-            console.log('dateA: ', dateA);
+
             if (order === 'asc') {
               return dateA > dateB ? 1 : -1;
             } else {
