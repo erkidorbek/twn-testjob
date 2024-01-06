@@ -7,16 +7,18 @@ import Loader from './Loader';
 const rowsPerPage = 10;
 
 const columns = [
-  { accessor: 'firstname', label: 'Eesnimi' },
-  { accessor: 'surname', label: 'Perenimi' },
+  { accessor: 'firstname', label: 'Eesnimi', sortable: true },
+  { accessor: 'surname', label: 'Perenimi', sortable: true },
   {
     accessor: 'sex',
     label: 'Sugu',
+    sortable: true,
     format: (value) => (value === 'f' ? 'Naine' : 'Mees'),
   },
   {
     accessor: 'personal_code',
     label: 'Sünnikuupäev',
+    sortable: true,
     format: (value) => formatIdCode(value),
   },
   {
@@ -151,9 +153,13 @@ const TwnTable = () => {
 
                     return (
                       <th key={column.accessor}>
-                        <button onClick={() => handleSort(column.accessor)}>
-                          <span>{column.label}</span> {sortIcon()}
-                        </button>
+                        {column.sortable ? (
+                          <button onClick={() => handleSort(column.accessor)}>
+                            <span>{column.label}</span> {sortIcon()}
+                          </button>
+                        ) : (
+                          <span>{column.label}</span>
+                        )}
                       </th>
                     );
                   })}
