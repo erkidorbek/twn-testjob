@@ -128,6 +128,29 @@ const TwnTable = () => {
     }));
   };
 
+  const getRange = (start, end, activePage) => {
+    const length = end - start + 1;
+    return Array.from({ length }, (_, i) => (
+      <button className={activePage === start + i ? 'active' : ''} onClick={() => setActivePage(start + i)}>
+        {start + i}
+      </button>
+    ));
+  };
+
+  const paginationNumbers = (currentPage, pageCount, delta) => {
+    const pages = [];
+
+    if (currentPage <= delta) {
+      pages.push(...getRange(1, Math.min(pageCount, delta * 2 + 1), currentPage));
+    } else if (currentPage > pageCount - delta) {
+      pages.push(...getRange(Math.max(1, pageCount - delta * 2), pageCount, currentPage));
+    } else {
+      pages.push(...getRange(Math.max(1, currentPage - delta), Math.min(pageCount, currentPage + delta), currentPage));
+    }
+
+    return pages;
+  };
+
   return (
     <div className="wrapper">
       <div className="table-wrap">
@@ -211,15 +234,7 @@ const TwnTable = () => {
               <button disabled={activePage === 1} onClick={() => setActivePage(activePage - 1)}>
                 <FontAwesomeIcon icon={faChevronLeft} />
               </button>
-              {activePage >= 3 && <button onClick={() => setActivePage(activePage - 2)}>{activePage - 2}</button>}
-              {activePage >= 2 && <button onClick={() => setActivePage(activePage - 1)}>{activePage - 1}</button>}
-              <button className={'active'}>{activePage}</button>
-              {activePage <= totalPages - 1 && (
-                <button onClick={() => setActivePage(activePage + 1)}>{activePage + 1}</button>
-              )}
-              {activePage <= totalPages - 2 && (
-                <button onClick={() => setActivePage(activePage + 2)}>{activePage + 2}</button>
-              )}
+              {paginationNumbers(activePage, totalPages, 2)}
               <button disabled={activePage === totalPages} onClick={() => setActivePage(activePage + 1)}>
                 <FontAwesomeIcon icon={faChevronRight} />
               </button>
