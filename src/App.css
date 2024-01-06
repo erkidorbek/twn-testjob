@@ -434,6 +434,7 @@ table th button {
   table td {
     font-size: var(--twn-smallFontSize);
     padding: 0.375rem 0.5rem;
+    text-wrap: nowrap;
   }
 
   table th button {
