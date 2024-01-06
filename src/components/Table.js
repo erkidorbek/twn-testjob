@@ -124,7 +124,7 @@ const TwnTable = () => {
     setActivePage(1);
     setSort((prevSort) => ({
       order: prevSort.order === 'asc' && prevSort.orderBy === accessor ? 'desc' : 'asc',
-      orderBy: accessor,
+      orderBy: prevSort.order === 'desc' && prevSort.orderBy !== 'id' ? 'id' : accessor,
     }));
   };
 
