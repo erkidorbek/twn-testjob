@@ -15,7 +15,7 @@ const App = () => {
       <Header setMenuStatus={setIsMenuOpen} menuOpen={isMenuOpen} />
 
       <Router>
-        <Nav isOpen={isMenuOpen} />
+        <Nav setMenuStatus={setIsMenuOpen} isOpen={isMenuOpen} />
 
         <Routes>
           <Route path="/" element={<Home />} />

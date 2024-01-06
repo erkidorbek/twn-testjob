@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFile, faTable } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
-const Nav = ({ isOpen }) => {
+const Nav = ({ setMenuStatus, isOpen }) => {
   return (
     <nav className={isOpen ? 'open' : ''}>
       <a href="/">
@@ -12,12 +12,12 @@ const Nav = ({ isOpen }) => {
       </a>
       <ul>
         <li>
-          <NavLink to="/article">
+          <NavLink to="/article" onClick={() => setMenuStatus(false)}>
             Artikkel <FontAwesomeIcon icon={faFile} />
           </NavLink>
         </li>
         <li>
-          <NavLink to="/table">
+          <NavLink to="/table" onClick={() => setMenuStatus(false)}>
             Tabel <FontAwesomeIcon icon={faTable} />
           </NavLink>
         </li>
