@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortDown, faSortUp, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { getBirthDateFromIdCode, formatIdCode } from '../components/helperFunctions';
+import { formatIdCodeToDate } from '../components/helperFunctions';
 import Loader from './Loader';
 
 const columns = [
@@ -18,7 +18,7 @@ const columns = [
     accessor: 'personal_code',
     label: 'Sünnikuupäev',
     sortable: true,
-    format: (value) => formatIdCode(value),
+    format: (idCode) => formatIdCodeToDate(idCode).toLocaleDateString('uk-Uk'),
   },
   {
     accessor: 'phone',
@@ -50,9 +50,17 @@ const TwnTable = () => {
         ?.sort((a, b) => {
           const { order, orderBy } = sort;
 
+          if (orderBy === 'index') {
+            if (order === 'asc') {
+              return a - b;
+            } else {
+              return b - a;
+            }
+          }
+
           if (orderBy === 'personal_code') {
-            const dateA = getBirthDateFromIdCode(a.personal_code).getTime();
-            const dateB = getBirthDateFromIdCode(b.personal_code).getTime();
+            const dateA = formatIdCodeToDate(a.personal_code).getTime();
+            const dateB = formatIdCodeToDate(b.personal_code).getTime();
 
             if (order === 'asc') {
               return dateA > dateB ? 1 : -1;

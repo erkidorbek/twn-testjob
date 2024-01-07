@@ -1,4 +1,4 @@
-const getBirthdateYearFromIdCode = (idCode) => {
+export const formatIdCodeToDate = (idCode) => {
   const code = idCode.toString();
   const yearCode = code.substring(0, 1);
   const day = code.substring(5, 7);
@@ -28,17 +28,5 @@ const getBirthdateYearFromIdCode = (idCode) => {
       break;
   }
 
-  return { yearStart, yearEnd, day, month };
-};
-
-export const getBirthDateFromIdCode = (idCode) => {
-  const { yearStart, yearEnd, day, month } = getBirthdateYearFromIdCode(idCode);
-
-  return new Date(yearStart + yearEnd, month, day, 0, 0, 0, 0);
-};
-
-export const formatIdCode = (idCode) => {
-  const { yearStart, yearEnd, day, month } = getBirthdateYearFromIdCode(idCode);
-
-  return day + '.' + month + '.' + yearStart + yearEnd;
+  return new Date(yearStart + yearEnd, month - 1, day, 0, 0, 0, 0);
 };
